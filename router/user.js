@@ -3,6 +3,10 @@ const userCtrl = require('../controller/user')
 
 const router = express.Router()
 
+// router.get('/', function(req, res) {
+//     res.send('Birds home page');
+//   });
+
 //登录
 router.post('/users/login', userCtrl.login)
 
