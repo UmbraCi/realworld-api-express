@@ -1,5 +1,6 @@
 const express = require('express')
 const articleCtrl = require('../controller/article')
+const auth = require('../middleware/auth')
 
 const router = express.Router()
 
@@ -10,7 +11,7 @@ router.get('/feed', articleCtrl.getFollowArticles)
 router.get('/', articleCtrl.getGloballyArticles)
 
 //Create an article
-router.post('/', articleCtrl.createArticle)
+router.post('/', auth , articleCtrl.createArticle)
 
 //Get an article
 router.get('/:slug', articleCtrl.getArticle)

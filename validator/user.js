@@ -28,7 +28,7 @@ exports.login = [
     validate([
         body('user.email').custom(async (email, {req}) => {
             //注意一定要select 因为password是select:false的(model中)
-            const user = await User.findOne({ email }).select('email','password','username','bio','image')   
+            const user = await User.findOne({ email }).select(['email','password','username','bio','image'])   
             // console.log(user)
             if(!user){
                 return Promise.reject('用户不存在')
@@ -41,7 +41,6 @@ exports.login = [
         body('user.password').custom(async (password, {req}) => {
             // console.log(md5(password))
             // console.log(req.user.password)
-            // console.log(req.user)
             if(md5(password) !== req.user.password){
                 return Promise.reject('密码错误')
             }
