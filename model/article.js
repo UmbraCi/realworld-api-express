@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
+const baseModel = require('./base-model')
 
 const { Schema } = mongoose;
 
 const articleSchema = new Schema({
+    ...baseModel,
     "username": {
         type:String,
         required:true
@@ -22,14 +24,6 @@ const articleSchema = new Schema({
     "image": {
         type:String,
         default:null
-    },
-    createdAt:{
-        type:Date,
-        default:Date.now
-    },
-    updateAt:{
-        type:Date,
-        default:Date.now
     }
 });
 

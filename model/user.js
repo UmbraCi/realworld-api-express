@@ -1,8 +1,11 @@
 const mongoose = require('mongoose');
+const baseModel = require('./base-model')
 
 const { Schema } = mongoose;
+const md5 = require('../util/md5')
 
 const userSchema = new Schema({
+    ...baseModel,
     "username": {
         type:String,
         required:true
@@ -13,7 +16,9 @@ const userSchema = new Schema({
     },
     "password": {
         type:String,
-        required:true
+        required:true,
+        set:value => md5(value),
+        select:false
     },
     "bio":  {
         type:String,
@@ -22,14 +27,6 @@ const userSchema = new Schema({
     "image": {
         type:String,
         default:null
-    },
-    createdAt:{
-        type:Date,
-        default:Date.now
-    },
-    updateAt:{
-        type:Date,
-        default:Date.now
     }
 });
 
