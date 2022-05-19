@@ -1,6 +1,7 @@
 const express = require('express')
 const articleCtrl = require('../controller/article')
 const auth = require('../middleware/auth')
+const articleValidator = require('../validator/article')
 
 const router = express.Router()
 
@@ -11,10 +12,10 @@ router.get('/feed', articleCtrl.getFollowArticles)
 router.get('/', articleCtrl.getGloballyArticles)
 
 //Create an article
-router.post('/', auth , articleCtrl.createArticle)
+router.post('/', auth , articleValidator.createArticle , articleCtrl.createArticle)
 
 //Get an article
-router.get('/:slug', articleCtrl.getArticle)
+router.get('/:slug', articleValidator.getArticle, articleCtrl.getArticle)
 
 //Update an article
 router.put('/:slug', articleCtrl.updateArticle)

@@ -10,7 +10,9 @@ exports.login = async (req,res,next)=>{
         const user = req.user.toJSON()
         const token = await jwt.sign({
             id:user._id,
-        },jwtSecret)
+        },jwtSecret,{
+            expiresIn: '1d'
+        })
         delete user.password
         //3. 发送响应
         res.status(200).json({

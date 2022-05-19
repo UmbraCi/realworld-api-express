@@ -1,5 +1,7 @@
 /**article controller */
 
+const { Article } = require('../model')
+
 //Get recent articles from users you follow
 exports.getFollowArticles = async (req, res ,next) => {
     try {
@@ -24,7 +26,13 @@ exports.getGloballyArticles = async (req, res ,next) => {
 exports.createArticle = async (req, res ,next) => {
     try {
         //处理请求
-        res.send('post/articles')
+        const article = new Article(req.body.article)
+        article.author = req.user._id
+        await article.populate('author')
+        await article.save()
+        res.status(201).json({
+            article
+        })
     } catch (err) {
         next(err)
     }
@@ -34,7 +42,14 @@ exports.createArticle = async (req, res ,next) => {
 exports.getArticle = async (req, res ,next) => {
     try {
         //处理请求
-        res.send('get/articles/:slug')
+        const article = await Article.findById(req.params.slug)
+        await article.populate('author')
+        if(!article){
+            return res.status(404).end
+        }
+        res.status(201).json({
+            article
+        })
     } catch (err) {
         next(err)
     }
