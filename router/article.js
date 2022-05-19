@@ -15,13 +15,13 @@ router.get('/', articleCtrl.getGloballyArticles)
 router.post('/', auth , articleValidator.createArticle , articleCtrl.createArticle)
 
 //Get an article
-router.get('/:slug', articleValidator.getArticle, articleCtrl.getArticle)
+router.get('/:slug', auth, articleValidator.getArticle, articleCtrl.getArticle)
 
 //Update an article
-router.put('/:slug', articleCtrl.updateArticle)
+router.put('/:slug', auth, articleValidator.updateArticle, articleCtrl.updateArticle)
 
 //Delete an article
-router.delete('/:slug', articleCtrl.deleteArticle)
+router.delete('/:slug', auth, articleValidator.deleteArticle, articleCtrl.deleteArticle)
 
 
 module.exports = router
